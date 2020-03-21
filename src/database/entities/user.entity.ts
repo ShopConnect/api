@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { UserToken } from './user-token.entity';
+import { ShoppingList } from './shoppinglist.entity';
 
 @Entity()
 export class User {
@@ -40,7 +41,7 @@ export class User {
 
   @Column()
   public country: string;
-  
+
   @Column()
   public city: string;
 
@@ -63,6 +64,13 @@ export class User {
   public telephoneNumber: string;
 
   @OneToMany(() => UserToken, token => token.user)
+
   @Exclude()
   public tokens: UserToken[];
+
+  @OneToMany(() => ShoppingList, shoppingList => shoppingList.owner)
+  public ownedShoppingLists: ShoppingList[];
+
+  @OneToMany(() => ShoppingList, shoppingList => shoppingList.shopper)
+  public shoppedShoppingLists: ShoppingList[];
 }
