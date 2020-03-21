@@ -14,7 +14,7 @@ export class Item {
   @Column()
   public name: string;
 
-  @Column()
+  @Column('decimal')
   public price: number;
 
   @OneToMany(() => OrderItem, orderItem => orderItem.item)

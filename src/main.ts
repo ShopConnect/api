@@ -8,6 +8,7 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { IoAdapter } from "@nestjs/platform-socket.io";
 import { NestFactory } from '@nestjs/core';
+import { SeedingService } from './database/seeding.service';
 
 async function bootstrap(): Promise<void> {
   const logger = new Logger("ShopConnect", true);
@@ -34,6 +35,9 @@ async function bootstrap(): Promise<void> {
   });
   app.use(helmet());
   app.use(passport.initialize());
+
+  let seedService = app.get(SeedingService);
+  seedService.up();
 
   let configService = app.get(ConfigService);
 

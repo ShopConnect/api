@@ -5,6 +5,8 @@ import { ItemCategory } from './entities/item-category.entity';
 import { Module } from '@nestjs/common';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
+import { Seed } from './entities/seed.entity';
+import { SeedingService } from './seeding.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './repositories/user.repository';
 import { UserToken } from './entities/user-token.entity';
@@ -17,11 +19,12 @@ import { UserToken } from './entities/user-token.entity';
       ItemCategory,
       Order,
       OrderItem,
+      Seed,
       UserRepository,
       UserToken
     ])
   ],
-  providers: [DatabaseService],
-  exports: [DatabaseService]
+  providers: [DatabaseService, SeedingService],
+  exports: [DatabaseService, SeedingService]
 })
 export class DatabaseModule { }

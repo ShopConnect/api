@@ -6,6 +6,7 @@ import { Item } from './entities/item.entity';
 import { ItemCategory } from './entities/item-category.entity';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
+import { Seed } from './entities/seed.entity';
 import { UserRepository } from './repositories/user.repository';
 import { UserToken } from './entities/user-token.entity';
 
@@ -21,6 +22,8 @@ export class DatabaseService {
 
     private readonly _orderItemRepository: Repository<OrderItem>;
 
+    private readonly _seedRepository: Repository<Seed>;
+
     private readonly _userRepository: UserRepository;
 
     private readonly _userTokenRepository: Repository<UserToken>;
@@ -33,6 +36,7 @@ export class DatabaseService {
         this._itemCategoryRepository = this.connection.getRepository(ItemCategory);
         this._orderRepository = this.connection.getRepository(Order);
         this._orderItemRepository = this.connection.getRepository(OrderItem);
+        this._seedRepository = this.connection.getRepository(Seed);
         this._userRepository = this.connection.getCustomRepository(UserRepository);
         this._userTokenRepository = this.connection.getRepository(UserToken);
     }
@@ -56,6 +60,10 @@ export class DatabaseService {
 
     public get orderItemRepository(): Repository<OrderItem> {
         return this._orderItemRepository;
+    }
+
+    public get seedRepository(): Repository<Seed> {
+        return this._seedRepository;
     }
 
     public get userRepository(): UserRepository {
