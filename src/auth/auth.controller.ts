@@ -1,5 +1,12 @@
 import { Controller, Body, Post, Get, UseGuards, Req } from '@nestjs/common';
-import { ApiTags, ApiBadRequestResponse, ApiOkResponse, ApiNotFoundResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+    ApiTags,
+    ApiBadRequestResponse,
+    ApiOkResponse,
+    ApiNotFoundResponse,
+    ApiUnauthorizedResponse,
+    ApiBearerAuth,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterRequestDto } from '../_dtos/register-request.dto';
 import { RegisterResponseDto } from '../_dtos/register-response.dto';
@@ -35,6 +42,7 @@ export class AuthController {
     @Get('logout')
     @ApiUnauthorizedResponse({ description: 'User is not authenticated' })
     @ApiOkResponse({ description: 'User successfully logged out' })
+    @ApiBearerAuth()
     @UseGuards(JwtAuthGuard)
     public async logout(@Req() request: Request): Promise<void> {
         const user = <User>request.user;
@@ -52,5 +60,22 @@ export class AuthController {
         }
 
         await this.authService.logout(user, token);
+    }
+
+    @Get('validate')
+    @ApiUnauthorizedResponse({ description: 'Token is not valid' })
+    @ApiOkResponse({ description: 'Token is valid' })
+    @ApiBearerAuth()
+    public async validate(@Req() request: Request): Promise<boolean> {
+        if (!request.headers.authorization) {
+            return false;
+        }
+
+        const token = request.headers.authorization.split(' ', 2)[1];
+        if (!token) {
+            return false;
+        }
+
+        return await this.authService.validateToken(token);
     }
 }

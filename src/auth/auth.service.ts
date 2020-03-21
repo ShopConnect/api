@@ -60,8 +60,11 @@ export class AuthService {
   public async login(loginRequest: LoginRequestDto): Promise<LoginResponseDto> {
     let user = await this.userRepository.getByEmailAsync(loginRequest.email);
 
+    console.dir(loginRequest);
+    console.dir(user);
+
     if (!user) {
-      throw new NotFoundException();
+      throw new NotFoundException("no user found");
     }
 
     if (user.isDeactivated) {
@@ -82,9 +85,9 @@ export class AuthService {
       createdOn: tokenIssueTimestamp
     });
 
-    this.userTokenRepository.save(userToken);
+    await this.userTokenRepository.save(userToken);
 
-    this.userRepository.update({
+    await this.userRepository.update({
       id: user.id
     }, {
       lastLogin: tokenIssueTimestamp
@@ -201,5 +204,19 @@ export class AuthService {
         resolve(false);
       });
     })
+  }
+
+  public async validateToken(token: string): Promise<boolean> {
+    const tokenEntity = await this.userTokenRepository.findOne({
+      where: {
+        token: token
+      }
+    });
+
+    if (!tokenEntity) {
+      return false;
+    }
+
+    return tokenEntity.isValid;
   }
 }

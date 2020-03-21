@@ -8,7 +8,6 @@ export class UserRepository extends Repository<User> {
      * Creates a new user. Returns true if it was successfull and false if not.
      * @param email Email of the user to create
      * @param passwordHash PasswordHashModel of the user to create
-     * @param admin Wether the created user is an admin
      */
     public async createAsync(email: string, passwordHash: PasswordHashModel): Promise<boolean> {
         try {
@@ -43,6 +42,8 @@ export class UserRepository extends Repository<User> {
             ],
             relations: relations
         });
+
+        console.dir(await this.find());
 
         return user;
     }

@@ -6,9 +6,12 @@ import { ShoppingList } from './entities/shoppinglist.entity';
 import { ShoppingListItem } from './entities/shoppingListItem.entity';
 import { UserRepository } from './repositories/user.repository';
 import { UserToken } from './entities/user-token.entity';
+import { IdentificationCard } from './entities/identification-card.entity';
 
 @Injectable()
 export class DatabaseService {
+    private readonly _identificationCardRepository: Repository<IdentificationCard>;
+
     private readonly _itemCategoryRepository: Repository<ItemCategory>
 
     private readonly _itemRepository: Repository<Item>
@@ -24,6 +27,7 @@ export class DatabaseService {
     constructor(
         private readonly connection: Connection
     ) {
+        this._identificationCardRepository = this.connection.getRepository(IdentificationCard);
         this._itemRepository = this.connection.getRepository(Item);
         this._itemCategoryRepository = this.connection.getRepository(ItemCategory);
         this._shoppingListItemRepository = this.connection.getRepository(ShoppingListItem);
@@ -31,6 +35,11 @@ export class DatabaseService {
         this._userRepository = this.connection.getCustomRepository(UserRepository);
         this._userTokenRepository = this.connection.getRepository(UserToken);
     }
+
+    public get identificationCardRepository(): Repository<IdentificationCard> {
+        return this._identificationCardRepository;
+    }
+    
 
     public get itemRepository(): Repository<Item> {
         return this._itemRepository;

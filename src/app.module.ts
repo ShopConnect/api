@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -22,15 +23,16 @@ import { PassportModule } from '@nestjs/passport';
         database: configService.get<string>('DB_NAME'),
         entities: [__dirname + '/database/entities/*.entity{.ts,.js}'],
         migrations: [__dirname + '/database/migrations/*.migration{.ts,.js}'],
-        synchronize: false,
-        logging: false,
+        synchronize: true,
+        logging: true,
         bigNumberStrings: false,
         supportBigNumbers: true
       })
     }),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     AuthModule,
-    DatabaseModule
+    DatabaseModule,
+    UserModule
   ],
   controllers: [AppController],
   providers: [AppService],

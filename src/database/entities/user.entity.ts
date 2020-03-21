@@ -1,6 +1,7 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { UserToken } from './user-token.entity';
+import { IdentificationCard } from './identification-card.entity';
 import { ShoppingList } from './shoppinglist.entity';
 
 @Entity()
@@ -26,41 +27,46 @@ export class User {
   @Exclude()
   public iterations: number;
 
-  @Column({ default: 0, nullable: true })
+  @OneToOne(() => IdentificationCard, identificationCard => identificationCard.user)
+  @JoinColumn()
+  @Exclude()
+  public identificationCard: IdentificationCard;
+
+  @Column({ default: false, nullable: false })
+  public isVerified: boolean;
+
+  @Column({ nullable: true, type: 'timestamp with time zone' })
   @Exclude()
   public lastLogin: Date;
 
-  @Column()
+  @Column({ type: 'timestamp with time zone' })
   public createdOn: Date;
-
-  @Column({ type: 'decimal', precision: 7, scale: 2 })
-  public balance: number;
 
   @Column({ type: 'boolean', default: false })
   public isDeactivated: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   public country: string;
-
-  @Column()
+  
+  @Column({ nullable: true })
   public city: string;
 
-  @Column()
+  @Column({ nullable: true })
   public zipCode: string;
 
-  @Column()
+  @Column({ nullable: true })
   public street: string;
 
-  @Column()
+  @Column({ nullable: true })
   public houseNumber: string;
 
-  @Column()
+  @Column({ nullable: true })
   public payPalHandle: string;
 
-  @Column()
+  @Column({ nullable: true })
   public iban: string;
 
-  @Column()
+  @Column({ nullable: true })
   public telephoneNumber: string;
 
   @OneToMany(() => UserToken, token => token.user)
