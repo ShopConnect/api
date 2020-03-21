@@ -39,7 +39,7 @@ export class UserService {
         id: jwtUser.id
       },
       relations: relations
-    })
+    });
   }
 
   public async patchUser(user: User, patchUserRequestDto: PatchUserRequestDto): Promise<boolean> {

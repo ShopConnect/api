@@ -10,6 +10,6 @@ export class UserDevice {
     @ManyToOne(() => User, user => user.devices)
     public user: User;
 
-    @Column()
+    @Column({ unique: true })
     public token: string;
 }

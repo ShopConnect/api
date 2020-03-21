@@ -1,3 +1,4 @@
+import { ChatMessage } from './entities/chat-message.entity';
 import { DatabaseService } from './database.service';
 import { IdentificationCard } from './entities/identification-card.entity';
 import { Item } from './entities/item.entity';
@@ -16,6 +17,7 @@ import { UserToken } from './entities/user-token.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
+      ChatMessage,
       IdentificationCard,
       Item,
       ItemCategory,

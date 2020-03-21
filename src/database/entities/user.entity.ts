@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
+import { ChatMessage } from './chat-message.entity';
 import { Exclude } from 'class-transformer';
 import { IdentificationCard } from './identification-card.entity';
 import { LogEntry } from './log-entry.entity';
@@ -93,6 +94,12 @@ export class User {
     
   @OneToMany(() => LogEntry, logEntry => logEntry.authenticatedUser)
   public logEntries: LogEntry[];
+
+  @OneToMany(() => ChatMessage, chatMessage => chatMessage.sender)
+  public sentMessages: ChatMessage[];
+
+  @OneToMany(() => ChatMessage, chatMessage => chatMessage.receiver)
+  public receivedMessages: ChatMessage[];
 
   @OneToMany(() => UserDevice, userDevice => userDevice.user)
   public devices: UserDevice[];

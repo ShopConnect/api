@@ -1,5 +1,6 @@
 import { Connection, Repository } from 'typeorm';
 
+import { ChatMessage } from './entities/chat-message.entity';
 import { IdentificationCard } from './entities/identification-card.entity';
 import { Injectable } from '@nestjs/common';
 import { Item } from './entities/item.entity';
@@ -14,6 +15,8 @@ import { UserToken } from './entities/user-token.entity';
 
 @Injectable()
 export class DatabaseService {
+    private readonly _chatMessageRepository: Repository<ChatMessage>;
+
     private readonly _identificationCardRepository: Repository<IdentificationCard>;
 
     private readonly _itemRepository: Repository<Item>;
@@ -37,6 +40,7 @@ export class DatabaseService {
     constructor(
         private readonly connection: Connection
     ) {
+        this._chatMessageRepository = this.connection.getRepository(ChatMessage);
         this._identificationCardRepository = this.connection.getRepository(IdentificationCard);
         this._itemRepository = this.connection.getRepository(Item);
         this._itemCategoryRepository = this.connection.getRepository(ItemCategory);
@@ -49,10 +53,13 @@ export class DatabaseService {
         this._userTokenRepository = this.connection.getRepository(UserToken);
     }
 
+    public get chatMessageRepository(): Repository<ChatMessage> {
+        return this._chatMessageRepository;
+    }
+
     public get identificationCardRepository(): Repository<IdentificationCard> {
         return this._identificationCardRepository;
     }
-    
 
     public get itemRepository(): Repository<Item> {
         return this._itemRepository;
