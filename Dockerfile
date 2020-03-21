@@ -4,7 +4,7 @@ FROM node:${NODE_VERSION}-alpine
 
 WORKDIR /usr/src/app
 
-COPY package.json .
+COPY *.json .
 RUN npm install
 
 COPY . .
