@@ -6,6 +6,7 @@ import {
     ApiNotFoundResponse,
     ApiUnauthorizedResponse,
     ApiBearerAuth,
+    ApiCreatedResponse,
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterRequestDto } from '../_dtos/register-request.dto';
@@ -25,7 +26,7 @@ export class AuthController {
 
     @Post('register')
     @ApiBadRequestResponse({ description: 'Username is already in use' })
-    @ApiOkResponse({ description: 'User is registered', type: RegisterResponseDto })
+    @ApiCreatedResponse({ description: 'User is registered', type: RegisterResponseDto })
     public register(@Body() registerRequest: RegisterRequestDto): Promise<RegisterResponseDto> {
         return this.authService.register(registerRequest);
     }
@@ -34,7 +35,7 @@ export class AuthController {
     @ApiNotFoundResponse({ description: 'User not found' })
     @ApiUnauthorizedResponse({ description: 'User is deactivated' })
     @ApiUnauthorizedResponse({ description: 'Wrong password' })
-    @ApiOkResponse({ description: 'User successfully logged in', type: LoginResponseDto })
+    @ApiCreatedResponse({ description: 'User successfully logged in', type: LoginResponseDto })
     public login(@Body() loginRequest: LoginRequestDto): Promise<LoginResponseDto> {
         return this.authService.login(loginRequest);
     }
@@ -81,7 +82,7 @@ export class AuthController {
 
     @Post('refresh')
     @ApiUnauthorizedResponse({ description: 'Token is not valid' })
-    @ApiOkResponse({ description: 'Token generated' })
+    @ApiCreatedResponse({ description: 'Token generated' })
     @ApiBearerAuth()
     public async refresh(@Req() request: Request): Promise<LoginResponseDto> {
         const user = <User>request.user;
