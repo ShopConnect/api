@@ -9,6 +9,7 @@ import { OrderModule } from './order/order.module';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
+import { WebsocketModule } from './websocket/websocket.module';
 
 @Module({
   imports: [
@@ -35,7 +36,8 @@ import { UserModule } from './user/user.module';
     AuthModule,
     DatabaseModule,
     UserModule,
-    OrderModule
+    OrderModule,
+    WebsocketModule
   ],
   controllers: [AppController],
   providers: [AppService],
