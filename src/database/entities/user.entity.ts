@@ -70,7 +70,6 @@ export class User {
   public telephoneNumber: string;
 
   @OneToMany(() => UserToken, token => token.user)
-
   @Exclude()
   public tokens: UserToken[];
 

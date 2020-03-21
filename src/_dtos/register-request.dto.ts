@@ -3,7 +3,6 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class RegisterRequestDto {
   @IsNotEmpty()
-  @MinLength(6)
   @MaxLength(255)
   @IsEmail()
   @ApiProperty({

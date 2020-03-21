@@ -1,9 +1,9 @@
 import {
-  BadRequestException,
+  BadRequestException, Body,
   ClassSerializerInterceptor,
   Controller, Delete,
   Get,
-  Param,
+  Param, Patch,
   Post,
   Req, UploadedFiles,
   UseGuards,
@@ -18,6 +18,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
 import { ApiImplicitFile } from '@nestjs/swagger/dist/decorators/api-implicit-file.decorator';
 import { UploadedFileModel } from '../_models/uploaded-file.model';
+import { PatchUserRequestDto } from '../_dtos/patch-user-request.dto';
 
 @Controller('user')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -39,6 +40,13 @@ export class UserController {
   public async getMe(@Req() req: Request) {
     const requestUser = <User>req.user;
     return this.userService.getUser(requestUser);
+  }
+
+  @Patch('@me')
+  @UseGuards(JwtAuthGuard)
+  public async patchMe(@Req() req: Request, @Body() patchUserRequestDto: PatchUserRequestDto) {
+    const requestUser = <User>req.user;
+    return this.userService.patchUser(requestUser, patchUserRequestDto);
   }
 
   @Post('@me/id')

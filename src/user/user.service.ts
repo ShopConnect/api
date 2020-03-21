@@ -6,6 +6,8 @@ import { UserToken } from '../database/entities/user-token.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { IdentificationCard } from '../database/entities/identification-card.entity';
 import { UploadedFileModel } from '../_models/uploaded-file.model';
+import { PatchUserRequestDto } from '../_dtos/patch-user-request.dto';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UserService {
@@ -17,6 +19,7 @@ export class UserService {
 
   constructor(
     private readonly databaseService: DatabaseService,
+    private readonly authService: AuthService,
   ) {
     this.userRepository = this.databaseService.userRepository;
     this.userTokenRepository = this.databaseService.userTokenRepository;
@@ -34,6 +37,59 @@ export class UserService {
       },
       relations: relations
     })
+  }
+
+  public async patchUser(user: User, patchUserRequestDto: PatchUserRequestDto): Promise<boolean> {
+    user = await this.userRepository.findOne({
+      where: {
+        id: user.id
+      }
+    });
+
+    if (patchUserRequestDto.email) {
+      user.email = patchUserRequestDto.email;
+    }
+
+    if (patchUserRequestDto.password) {
+      let passwordHash = await this.authService.generatePasswordHash(patchUserRequestDto.password);
+      user.password = passwordHash.hash;
+      user.salt = passwordHash.salt;
+      user.iterations = passwordHash.iterations;
+    }
+
+    if (patchUserRequestDto.country) {
+      user.country = patchUserRequestDto.country;
+    }
+
+    if (patchUserRequestDto.city) {
+      user.city = patchUserRequestDto.city;
+    }
+
+    if (patchUserRequestDto.zipCode) {
+      user.zipCode = patchUserRequestDto.zipCode;
+    }
+
+    if (patchUserRequestDto.street) {
+      user.street = patchUserRequestDto.street;
+    }
+
+    if (patchUserRequestDto.houseNumber) {
+      user.houseNumber = patchUserRequestDto.houseNumber;
+    }
+
+    if (patchUserRequestDto.payPalHandle) {
+      user.payPalHandle = patchUserRequestDto.payPalHandle;
+    }
+
+    if (patchUserRequestDto.iban) {
+      user.iban = patchUserRequestDto.iban;
+    }
+
+    if (patchUserRequestDto.telephoneNumber) {
+      user.telephoneNumber = patchUserRequestDto.telephoneNumber;
+    }
+
+    return (await this.userRepository.update({ id: user.id }, user)).affected > 0;
   }
 
   public async postIdFoto(jwtUser: User, files: UploadedFileModel[]): Promise<boolean> {
