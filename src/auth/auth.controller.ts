@@ -3,10 +3,10 @@ import { ApiTags, ApiBadRequestResponse, ApiOkResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { RegisterRequestDto } from '../_dtos/register-request.dto';
 import { RegisterResponseDto } from '../_dtos/register-response.dto';
-import { LoginRequestDto } from 'src/_dtos/login-request.dto';
-import { LoginResponseDto } from 'src/_dtos/login-response.dto';
+import { LoginRequestDto } from '../_dtos/login-request.dto';
+import { LoginResponseDto } from '../_dtos/login-response.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { User } from 'src/database/entities/user.entity';
+import { User } from '../database/entities/user.entity';
 import { Request } from 'express';
 
 @Controller('auth')
