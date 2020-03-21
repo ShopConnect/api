@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { Module } from '@nestjs/common';
+import { NotificationModule } from './notification/notification.module';
 import { OrderModule } from './order/order.module';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -37,6 +38,7 @@ import { WebsocketModule } from './websocket/websocket.module';
     DatabaseModule,
     UserModule,
     OrderModule,
+    NotificationModule,
     WebsocketModule
   ],
   controllers: [AppController],
