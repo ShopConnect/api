@@ -11,6 +11,7 @@ import { UploadedFileModel } from '../_models/uploaded-file.model';
 import { User } from '../database/entities/user.entity';
 import { UserDevice } from '../database/entities/user-device.entity';
 import { UserRepository } from '../database/repositories/user.repository';
+import { Order } from 'src/database/entities/order.entity';
 
 @Injectable()
 export class UserService {
@@ -20,6 +21,8 @@ export class UserService {
 
   private readonly identificationCardRepository: Repository<IdentificationCard>;
 
+  private readonly orderRepository: Repository<Order>
+
   constructor(
     private readonly databaseService: DatabaseService,
     private readonly authService: AuthService,
@@ -27,6 +30,7 @@ export class UserService {
     this.userRepository = this.databaseService.userRepository;
     this.userDeviceRepository = this.databaseService.userDeviceRepository;
     this.identificationCardRepository = this.databaseService.identificationCardRepository;
+    this.orderRepository = this.databaseService.orderRepository;
   }
 
   public getAll(): Promise<User[]> {
@@ -139,7 +143,7 @@ export class UserService {
 
     return new RegisterDeviceResponseDto(userDevice != null);
   }
-  
+
   public async deleteIdData(jwtUser: User): Promise<boolean> {
     let identificationCard = await this.identificationCardRepository.findOne({
       where: {
@@ -163,5 +167,9 @@ export class UserService {
     });
 
     return (await this.identificationCardRepository.delete({ id: identificationCard.id })).affected > 0;
+  }
+
+  public async getOrders(id: number) {
+    return this.orderRepository.find({ where: { id: id } });
   }
 }
