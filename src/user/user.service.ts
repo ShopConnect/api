@@ -9,9 +9,8 @@ import { RegisterDeviceResponseDto } from '../_dtos/register-device-response.dto
 import { Repository } from 'typeorm';
 import { UploadedFileModel } from '../_models/uploaded-file.model';
 import { User } from '../database/entities/user.entity';
-import { UserDevice } from 'src/database/entities/user-device.entity';
+import { UserDevice } from '../database/entities/user-device.entity';
 import { UserRepository } from '../database/repositories/user.repository';
-import { UserToken } from '../database/entities/user-token.entity';
 
 @Injectable()
 export class UserService {
