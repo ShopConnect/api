@@ -33,8 +33,7 @@ export class AuthController {
 
     @Post('login')
     @ApiNotFoundResponse({ description: 'User not found' })
-    @ApiUnauthorizedResponse({ description: 'User is deactivated' })
-    @ApiUnauthorizedResponse({ description: 'Wrong password' })
+    @ApiUnauthorizedResponse({ description: 'User is deactivated or password is wrong' })
     @ApiCreatedResponse({ description: 'User successfully logged in', type: LoginResponseDto })
     public login(@Body() loginRequest: LoginRequestDto): Promise<LoginResponseDto> {
         return this.authService.login(loginRequest);
@@ -82,7 +81,7 @@ export class AuthController {
 
     @Post('refresh')
     @ApiUnauthorizedResponse({ description: 'Token is not valid' })
-    @ApiCreatedResponse({ description: 'Token generated' })
+    @ApiCreatedResponse({ description: 'Token generated', type: LoginResponseDto })
     @ApiBearerAuth()
     public async refresh(@Req() request: Request): Promise<LoginResponseDto> {
         const user = <User>request.user;

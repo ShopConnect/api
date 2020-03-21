@@ -67,12 +67,12 @@ export class AuthService {
     }
 
     if (user.isDeactivated) {
-      throw new UnauthorizedException("User is deactivated");
+      throw new UnauthorizedException('deactivated');
     }
 
     let hasAccess = await this.checkEquals(user, loginRequest.password);
     if (!hasAccess) {
-      throw new UnauthorizedException("Wrong password");
+      throw new UnauthorizedException('password');
     }
 
     return this.refreshToken(user);
