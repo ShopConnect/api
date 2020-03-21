@@ -14,6 +14,7 @@ export class OrderService {
   private readonly orderRepository: Repository<Order>;
   private readonly orderItemRepository: Repository<OrderItem>;
   private readonly itemRepository: Repository<Item>;
+  
   constructor(
     private readonly databaseService: DatabaseService
   ) {
@@ -32,6 +33,14 @@ export class OrderService {
     
     await this.orderRepository.save(order);
     return new CreateOrderResponseDto(true);
+  }
+
+  public async getOrders(requestedUser: User): Promise<Order[]> {
+    return (await this.orderRepository.find({
+      relations: [
+        "owner"
+      ]
+    })).filter(x => x.owner.id != requestedUser.id);
   }
 
   public getOrder(order: Order, relations: string[] = []): Promise<Order> {
@@ -87,6 +96,41 @@ export class OrderService {
     }
     
     order.items = order.items.filter(item => item.id != itemId);
+    return await this.orderRepository.update({ id: orderId }, order);
+  }
+
+  public async changeState(user: User, orderId: number, newState: OrderState) {
+    let order = await this.getOrder(<Order>{ id: orderId }, ["owner", "accepter"]);
+    if (!order) {
+      throw new BadRequestException('Invalid oder id!');
+    }
+
+    if (order.orderState == OrderState.Ordered && newState == OrderState.Accepted && order.owner.id != user.id) {
+      order.orderState = newState;
+      order.accepter = user;
+    }
+    else if (order.orderState == OrderState.Ordered && newState == OrderState.Drafted && order.owner.id == user.id) {
+      order.orderState = newState;
+    }
+    else if (order.orderState == OrderState.Drafted && newState == OrderState.Ordered && order.owner.id == user.id) {
+      order.orderState = newState;
+    }
+    else if (order.orderState == OrderState.Accepted && (newState == OrderState.Ordered || newState == OrderState.Drafted) && order.owner.id == user.id) {
+      order.orderState = newState;
+      order.accepter = null;
+    }
+    else if (order.orderState == OrderState.Accepted && newState == OrderState.Shopping && order.accepter.id == user.id) {
+      order.orderState = newState;
+    }
+    else if (order.orderState == OrderState.Shopping && newState == OrderState.Delivering && order.accepter.id == user.id) {
+      order.orderState = newState;
+    }
+    else if (order.orderState == OrderState.Delivering && newState == OrderState.Delivered && (order.accepter.id == user.id || order.owner.id == user.id)) {
+      order.orderState = newState;
+    }
+    else {
+      throw new BadRequestException('Illegal move or not permitted!');
+    }
     return await this.orderRepository.update({ id: orderId }, order);
   }
 }
