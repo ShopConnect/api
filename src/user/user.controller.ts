@@ -93,13 +93,13 @@ export class UserController {
 
   @Get('@me/orders')
   @UseGuards(JwtAuthGuard)
-  public getOrders(@Req() req: Request):Order[] {
-    return (<User>req.user).ownedOrders;
+  public async getOrders(@Req() req: Request): Promise<Order[]> {
+    return (await this.getById((<User>req.user).id)).ownedOrders;
   }
 
   @Get(':id/orders')
   @UseGuards(JwtAuthGuard, AdminGuard)
-  public async getForeignOrders(@Param('id') id: number): Promise<Order[]>{
+  public async getForeignOrders(@Param('id') id: number): Promise<Order[]> {
     return (await this.getById(id)).ownedOrders;
   }
 
