@@ -4,6 +4,7 @@ import { Exclude } from 'class-transformer';
 import { IdentificationCard } from './identification-card.entity';
 import { LogEntry } from './log-entry.entity';
 import { Order } from './order.entity';
+import { UserDevice } from './user-device.entity';
 import { UserToken } from './user-token.entity';
 
 @Entity()
