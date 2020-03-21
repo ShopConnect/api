@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { Module } from '@nestjs/common';
+import { OrderModule } from './order/order.module';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
@@ -33,7 +34,8 @@ import { UserModule } from './user/user.module';
     PassportModule.register({ defaultStrategy: 'jwt' }),
     AuthModule,
     DatabaseModule,
-    UserModule
+    UserModule,
+    OrderModule
   ],
   controllers: [AppController],
   providers: [AppService],

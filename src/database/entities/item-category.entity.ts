@@ -4,12 +4,12 @@ import { Item } from "./item.entity";
 
 @Entity()
 export class ItemCategory {
-	@PrimaryGeneratedColumn()
-	public id: number;
+  @PrimaryGeneratedColumn()
+  public id: number;
 
-	@Column()
-	public name: string;
+  @Column()
+  public name: string;
 
-	@OneToMany(() => Item, item => item.category)
-	public items: Item[];
+  @OneToMany(() => Item, item => item.category)
+  public items: Item[];
 }
