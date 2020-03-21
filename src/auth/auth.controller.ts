@@ -1,4 +1,4 @@
-import { Controller, Body, Post, Get, UseGuards, Req } from '@nestjs/common';
+import { Controller, Body, Post, Get, UseGuards, Req, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
 import {
     ApiTags,
     ApiBadRequestResponse,
@@ -18,6 +18,7 @@ import { User } from '../database/entities/user.entity';
 import { Request } from 'express';
 
 @Controller('auth')
+@UseInterceptors(ClassSerializerInterceptor)
 @ApiTags('auth')
 export class AuthController {
     constructor(

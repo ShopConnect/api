@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import { OrderItem } from "./order-item.entity";
+import { OrderState } from "../../_enums/order-state.enum";
 import { User } from "./user.entity";
 
 @Entity()
@@ -17,6 +18,9 @@ export class Order {
   @Column()
   public maxValue: number;
 
-  @OneToMany(() => OrderItem, orderItem => orderItem.list)
+  @Column("enum", { enum: OrderState })
+  public orderState: OrderState;
+
+  @OneToMany(() => OrderItem, orderItem => orderItem.order)
   public items: OrderItem[];
 }

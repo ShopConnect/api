@@ -26,7 +26,7 @@ import { UserModule } from './user/user.module';
         entities: [__dirname + '/database/entities/*.entity{.ts,.js}'],
         migrations: [__dirname + '/database/migrations/*.migration{.ts,.js}'],
         synchronize: true,
-        logging: true,
+        logging: false,
         bigNumberStrings: false,
         supportBigNumbers: true
       })

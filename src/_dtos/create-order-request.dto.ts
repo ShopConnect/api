@@ -2,7 +2,7 @@ import { ArrayNotEmpty, IsArray, IsBoolean, IsNumber } from "class-validator";
 
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateOrderRequestItemDto {
+export class CreateOrderItemRequestDto {
   @IsNumber()
   @ApiProperty({
     required: true,
@@ -30,10 +30,10 @@ export class CreateOrderRequestDto {
   @ArrayNotEmpty()
   @ApiProperty({
     required: true,
-    type: () => CreateOrderRequestItemDto,
+    type: () => CreateOrderItemRequestDto,
     isArray: true
   })
-  items: CreateOrderRequestItemDto[];
+  items: CreateOrderItemRequestDto[];
   
   @IsNumber()
   @ApiProperty({

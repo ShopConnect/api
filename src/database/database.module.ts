@@ -2,6 +2,7 @@ import { DatabaseService } from './database.service';
 import { IdentificationCard } from './entities/identification-card.entity';
 import { Item } from './entities/item.entity';
 import { ItemCategory } from './entities/item-category.entity';
+import { LogEntry } from './entities/log-entry.entity';
 import { Module } from '@nestjs/common';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
@@ -17,6 +18,7 @@ import { UserToken } from './entities/user-token.entity';
       IdentificationCard,
       Item,
       ItemCategory,
+      LogEntry,
       Order,
       OrderItem,
       Seed,

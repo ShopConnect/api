@@ -9,7 +9,7 @@ export class OrderItem {
   public id: number;
 
   @ManyToOne(() => Order, order => order.items)
-  public list: Order;
+  public order: Order;
 
   @ManyToOne(() => Item, item => item.orderItems)
   public item: Item;

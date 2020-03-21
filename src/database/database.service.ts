@@ -4,6 +4,7 @@ import { IdentificationCard } from './entities/identification-card.entity';
 import { Injectable } from '@nestjs/common';
 import { Item } from './entities/item.entity';
 import { ItemCategory } from './entities/item-category.entity';
+import { LogEntry } from './entities/log-entry.entity';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { Seed } from './entities/seed.entity';
@@ -17,6 +18,8 @@ export class DatabaseService {
     private readonly _itemRepository: Repository<Item>;
 
     private readonly _itemCategoryRepository: Repository<ItemCategory>;
+
+    private readonly _logEntryRepository: Repository<LogEntry>;
 
     private readonly _orderRepository: Repository<Order>;
 
@@ -34,6 +37,7 @@ export class DatabaseService {
         this._identificationCardRepository = this.connection.getRepository(IdentificationCard);
         this._itemRepository = this.connection.getRepository(Item);
         this._itemCategoryRepository = this.connection.getRepository(ItemCategory);
+        this._logEntryRepository = this.connection.getRepository(LogEntry);
         this._orderRepository = this.connection.getRepository(Order);
         this._orderItemRepository = this.connection.getRepository(OrderItem);
         this._seedRepository = this.connection.getRepository(Seed);
@@ -52,6 +56,10 @@ export class DatabaseService {
 
     public get itemCategoryRepository(): Repository<ItemCategory> {
         return this._itemCategoryRepository;
+    }
+
+    public get logEntryRepository(): Repository<LogEntry> {
+        return this._logEntryRepository;
     }
 
     public get orderRepository(): Repository<Order> {

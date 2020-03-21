@@ -5,8 +5,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { Logger, ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
+import { AuthService } from './auth/auth.service';
 import { ConfigService } from '@nestjs/config';
+import { DatabaseService } from './database/database.service';
 import { IoAdapter } from "@nestjs/platform-socket.io";
+import { LoggingInterceptor } from './logging.interceptor';
 import { NestFactory } from '@nestjs/core';
 import { SeedingService } from './database/seeding.service';
 
@@ -27,6 +30,7 @@ async function bootstrap(): Promise<void> {
 
   app.useWebSocketAdapter(new IoAdapter(app));
 
+  app.useGlobalInterceptors(new LoggingInterceptor(app.get(DatabaseService), app.get(AuthService)));
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
     origin: [

@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn
 
 import { Exclude } from 'class-transformer';
 import { IdentificationCard } from './identification-card.entity';
+import { LogEntry } from './log-entry.entity';
 import { Order } from './order.entity';
 import { UserToken } from './user-token.entity';
 
@@ -79,4 +80,7 @@ export class User {
 
   @OneToMany(() => Order, order => order.accepter)
   public acceptedOrders: Order[];
+    
+  @OneToMany(() => LogEntry, logEntry => logEntry.authenticatedUser)
+  public logEntries: LogEntry[];
 }

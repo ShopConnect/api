@@ -222,4 +222,21 @@ export class AuthService {
 
     return tokenEntity.isValid;
   }
+
+  public async getUserByToken(token: string): Promise<User> {
+    let userToken = await this.userTokenRepository.findOne({
+      where: {
+        token: token
+      },
+      relations: [
+        "user"
+      ]
+    });
+
+    if (!userToken) {
+      return null;
+    }
+
+    return userToken.user;
+  }
 }

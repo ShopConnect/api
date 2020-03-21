@@ -19,6 +19,7 @@ import { Request } from 'express';
 import { ApiImplicitFile } from '@nestjs/swagger/dist/decorators/api-implicit-file.decorator';
 import { UploadedFileModel } from '../_models/uploaded-file.model';
 import { PatchUserRequestDto } from '../_dtos/patch-user-request.dto';
+import { Order } from '../database/entities/order.entity';
 
 @Controller('user')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -80,4 +81,17 @@ export class UserController {
   public getById(@Param('id') id: number): Promise<User> {
     return this.userService.getUser(<User>{ id: id });
   }
+
+  @Get('@me/orders')
+  @UseGuards(JwtAuthGuard)
+  public getOrders(@Req() req: Request):Order[] {
+    return (<User>req.user).ownedOrders;
+  }
+
+  @Get(':id/orders')
+  @UseGuards(JwtAuthGuard, AdminGuard)
+  public async getForeignOrders(@Param('id') id: number): Promise<Order[]>{
+    return (await this.getById(id)).ownedOrders;
+  }
+
 }
