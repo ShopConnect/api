@@ -14,6 +14,9 @@ export class Item {
   @Column()
   public name: string;
 
+  @Column({nullable: true})
+  public description: string;
+
   @Column('decimal')
   public price: number;
 

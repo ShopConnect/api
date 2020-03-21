@@ -44,8 +44,6 @@ export class UserRepository extends Repository<User> {
             relations: relations
         });
 
-        console.dir(await this.find());
-
         return user;
     }
 

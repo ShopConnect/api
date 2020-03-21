@@ -10,6 +10,9 @@ export class ItemCategory {
   @Column()
   public name: string;
 
+  @Column({nullable: true})
+  public description: string;
+
   @OneToMany(() => Item, item => item.category)
   public items: Item[];
 }

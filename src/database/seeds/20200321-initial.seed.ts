@@ -19,13 +19,16 @@ export class InitialSeed20200321 extends Seed {
             .into(ItemCategory)
             .values([
                 {
-                    name: 'Lebensmittel'
+                    name: 'Lebensmittel',
+                    description: ''
                 },
                 {
-                    name: 'Drogerie und Haushalt'
+                    name: 'Drogerie und Haushalt',
+                    description: ''
                 },
                 {
-                    name: 'Tier'
+                    name: 'Tier',
+                    description: ''
                 }
             ])
             .execute();
@@ -36,6 +39,7 @@ export class InitialSeed20200321 extends Seed {
             .values([
                 {
                     name: 'Schmelzkäse Chester Scheiben 250g',
+                    description: '',
                     price: 0.99,
                     category: {
                         id: 1
@@ -43,6 +47,7 @@ export class InitialSeed20200321 extends Seed {
                 },
                 {
                     name: 'Gustavo Gusto Steinofen Salame 460g',
+                    description: '',
                     price: 3.79,
                     category: {
                         id: 1
@@ -50,6 +55,7 @@ export class InitialSeed20200321 extends Seed {
                 },
                 {
                     name: 'Nivea Flüssigseife Creme Soft 250ml',
+                    description: '',
                     price: 1.25,
                     category: {
                         id: 2
@@ -57,6 +63,7 @@ export class InitialSeed20200321 extends Seed {
                 },
                 {
                     name: 'Duschdas Men Duschgel 250ml',
+                    description: '',
                     price: 1.25,
                     category: {
                         id: 2
@@ -64,6 +71,7 @@ export class InitialSeed20200321 extends Seed {
                 },
                 {
                     name: 'Crave Pastete mit Huhn & Truthahn 300g',
+                    description: '',
                     price: 1.99,
                     category: {
                         id: 3
@@ -71,6 +79,7 @@ export class InitialSeed20200321 extends Seed {
                 },
                 {
                     name: 'Wildes Land Entenbrust in Streifen',
+                    description: '',
                     price: 2.49,
                     category: {
                         id: 3
