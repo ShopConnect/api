@@ -1,5 +1,5 @@
 import { ChatMessage } from "../../database/entities/chat-message.entity";
-import { DatabaseService } from "src/database/database.service";
+import { DatabaseService } from "../../database/database.service";
 import { User } from "../../database/entities/user.entity";
 
 export abstract class BaseNotificationProvider {

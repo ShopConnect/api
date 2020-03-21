@@ -3,7 +3,7 @@ import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, WebSocketGatew
 import { Logger } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { UserToken } from '../database/entities/user-token.entity';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { Server, Socket } from 'socket.io';
 import { User } from '../database/entities/user.entity';
 
