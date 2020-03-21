@@ -70,7 +70,7 @@ export class UserController {
     return this.userService.postIdFoto(requestUser, files);
   }
 
-  @Post('@me/id/register-device')
+  @Post('@me/register-device')
   @UseGuards(JwtAuthGuard)
   public postRegisterDevice(@Req() req: Request, @Body() registerDeviceRequestDto: RegisterDeviceRequestDto): Promise<RegisterDeviceResponseDto> {
     const requestUser = <User>req.user;

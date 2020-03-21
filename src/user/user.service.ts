@@ -60,6 +60,18 @@ export class UserService {
       user.iterations = passwordHash.iterations;
     }
 
+    if (patchUserRequestDto.firstName) {
+      user.firstName = patchUserRequestDto.firstName;
+    }
+
+    if (patchUserRequestDto.lastName) {
+      user.lastName = patchUserRequestDto.lastName;
+    }
+
+    if (patchUserRequestDto.birthday) {
+      user.birthday = patchUserRequestDto.birthday;
+    }
+
     if (patchUserRequestDto.country) {
       user.country = patchUserRequestDto.country;
     }

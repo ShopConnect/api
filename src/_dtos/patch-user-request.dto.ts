@@ -1,4 +1,4 @@
-import { IsEmail, IsOptional, IsPhoneNumber, MaxLength, MinLength } from 'class-validator';
+import { IsDateString, IsEmail, IsOptional, IsPhoneNumber, MaxLength, MinLength } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -19,6 +19,30 @@ export class PatchUserRequestDto {
     type: 'string'
   })
   password?: string;
+
+  @IsOptional()
+  @ApiProperty({
+    required: false,
+    type: 'string'
+  })
+  firstName?: string;
+
+
+  @IsOptional()
+  @ApiProperty({
+    required: false,
+    type: 'string'
+  })
+  lastName?: string;
+
+
+  @IsOptional()
+  @ApiProperty({
+    required: false,
+    type: 'string'
+  })
+  @IsDateString()
+  birthday?: Date;
 
   @IsOptional()
   @ApiProperty({

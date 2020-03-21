@@ -49,6 +49,15 @@ export class User {
   public isDeactivated: boolean;
 
   @Column({ nullable: true })
+  public firstName: string;
+
+  @Column({ nullable: true })
+  public lastName: string;
+
+  @Column('date', { nullable: true })
+  public birthday: Date;
+
+  @Column({ nullable: true })
   public country: string;
   
   @Column({ nullable: true })
