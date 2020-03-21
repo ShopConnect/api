@@ -1,17 +1,19 @@
 import * as crypto from 'crypto';
+
 import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { UserRepository } from '../database/repositories/user.repository';
-import { Repository } from 'typeorm';
-import { UserToken } from '../database/entities/user-token.entity';
+
 import { DatabaseService } from '../database/database.service';
+import { JwtPayload } from './interfaces/jwt-payload.interface';
+import { JwtService } from '@nestjs/jwt';
 import { LoginRequestDto } from '../_dtos/login-request.dto';
-import { User } from '../database/entities/user.entity';
+import { LoginResponseDto } from '../_dtos/login-response.dto';
 import { PasswordHashModel } from '../_models/password-hash.model';
 import { RegisterRequestDto } from '../_dtos/register-request.dto';
-import { LoginResponseDto } from '../_dtos/login-response.dto';
 import { RegisterResponseDto } from '../_dtos/register-response.dto';
+import { Repository } from 'typeorm';
+import { User } from '../database/entities/user.entity';
+import { UserRepository } from '../database/repositories/user.repository';
+import { UserToken } from '../database/entities/user-token.entity';
 
 @Injectable()
 export class AuthService {

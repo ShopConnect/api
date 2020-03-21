@@ -1,8 +1,9 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+
 import { Exclude } from 'class-transformer';
-import { UserToken } from './user-token.entity';
 import { IdentificationCard } from './identification-card.entity';
-import { ShoppingList } from './shoppinglist.entity';
+import { Order } from './order.entity';
+import { UserToken } from './user-token.entity';
 
 @Entity()
 export class User {
@@ -73,9 +74,9 @@ export class User {
   @Exclude()
   public tokens: UserToken[];
 
-  @OneToMany(() => ShoppingList, shoppingList => shoppingList.owner)
-  public ownedShoppingLists: ShoppingList[];
+  @OneToMany(() => Order, order => order.owner)
+  public ownedOrders: Order[];
 
-  @OneToMany(() => ShoppingList, shoppingList => shoppingList.shopper)
-  public shoppedShoppingLists: ShoppingList[];
+  @OneToMany(() => Order, order => order.accepter)
+  public acceptedOrders: Order[];
 }

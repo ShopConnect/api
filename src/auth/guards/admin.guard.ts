@@ -1,6 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { UserRepository } from '../../database/repositories/user.repository';
+
 import { DatabaseService } from '../../database/database.service';
+import { UserRepository } from '../../database/repositories/user.repository';
 
 @Injectable()
 export class AdminGuard implements CanActivate {

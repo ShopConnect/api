@@ -1,6 +1,7 @@
 import { EntityRepository, Repository } from "typeorm";
-import { User } from "../entities/user.entity";
+
 import { PasswordHashModel } from "../../_models/password-hash.model";
+import { User } from "../entities/user.entity";
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {

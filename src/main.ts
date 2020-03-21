@@ -1,11 +1,13 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { Logger, ValidationPipe } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as passport from 'passport';
 import * as helmet from 'helmet';
+import * as passport from 'passport';
+
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Logger, ValidationPipe } from '@nestjs/common';
+
+import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { IoAdapter } from "@nestjs/platform-socket.io";
+import { NestFactory } from '@nestjs/core';
 
 async function bootstrap(): Promise<void> {
   const logger = new Logger("ShopConnect", true);

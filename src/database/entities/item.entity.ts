@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column, OneToMany } from "typeorm";
-import { ShoppingList } from "./shoppinglist.entity";
-import { ShoppingListItem } from "./shoppingListItem.entity";
-import { ItemCategory } from "./itemCategory.entity";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
+import { ItemCategory } from "./item-category.entity";
+import { OrderItem } from "./order-item.entity";
 
 @Entity()
 export class Item {
@@ -17,6 +17,6 @@ export class Item {
 	@Column()
 	public price: number;
 
-	@OneToMany(() => ShoppingListItem, shoppingListItem => shoppingListItem.item)
-	public shoppingListItems: ShoppingListItem[];
+	@OneToMany(() => OrderItem, orderItem => orderItem.item)
+	public orderItems: OrderItem[];
 }

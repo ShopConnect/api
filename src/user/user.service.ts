@@ -1,13 +1,14 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { User } from '../database/entities/user.entity';
+
+import { AuthService } from '../auth/auth.service';
 import { DatabaseService } from '../database/database.service';
+import { IdentificationCard } from '../database/entities/identification-card.entity';
+import { PatchUserRequestDto } from '../_dtos/patch-user-request.dto';
+import { Repository } from 'typeorm';
+import { UploadedFileModel } from '../_models/uploaded-file.model';
+import { User } from '../database/entities/user.entity';
 import { UserRepository } from '../database/repositories/user.repository';
 import { UserToken } from '../database/entities/user-token.entity';
-import { DeleteResult, Repository } from 'typeorm';
-import { IdentificationCard } from '../database/entities/identification-card.entity';
-import { UploadedFileModel } from '../_models/uploaded-file.model';
-import { PatchUserRequestDto } from '../_dtos/patch-user-request.dto';
-import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UserService {
