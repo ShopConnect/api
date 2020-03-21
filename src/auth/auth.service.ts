@@ -60,9 +60,6 @@ export class AuthService {
   public async login(loginRequest: LoginRequestDto): Promise<LoginResponseDto> {
     let user = await this.userRepository.getByEmailAsync(loginRequest.email);
 
-    console.dir(loginRequest);
-    console.dir(user);
-
     if (!user) {
       throw new NotFoundException("no user found");
     }
@@ -76,24 +73,7 @@ export class AuthService {
       throw new UnauthorizedException("Wrong password");
     }
 
-    const tokenIssueTimestamp = new Date();
-    const token = await this.generateTokenForUser(user, tokenIssueTimestamp);
-    const userToken = this.userTokenRepository.create({
-      user: user,
-      token: token,
-      isValid: true,
-      createdOn: tokenIssueTimestamp
-    });
-
-    await this.userTokenRepository.save(userToken);
-
-    await this.userRepository.update({
-      id: user.id
-    }, {
-      lastLogin: tokenIssueTimestamp
-    });
-
-    return new LoginResponseDto(token);
+    return this.refreshToken(user);
   }
 
   public async logout(user: User, token: string): Promise<void> {
@@ -126,6 +106,27 @@ export class AuthService {
     }
 
     return user;
+  }
+
+  public async refreshToken(user: User): Promise<LoginResponseDto> {
+    const tokenIssueTimestamp = new Date();
+    const token = await this.generateTokenForUser(user, tokenIssueTimestamp);
+    const userToken = this.userTokenRepository.create({
+      user: user,
+      token: token,
+      isValid: true,
+      createdOn: tokenIssueTimestamp
+    });
+
+    await this.userTokenRepository.save(userToken);
+
+    await this.userRepository.update({
+      id: user.id
+    }, {
+      lastLogin: tokenIssueTimestamp
+    });
+
+    return new LoginResponseDto(token);
   }
 
   public generatePasswordHash(password: string): Promise<PasswordHashModel> {

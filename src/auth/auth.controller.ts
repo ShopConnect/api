@@ -78,4 +78,17 @@ export class AuthController {
 
         return await this.authService.validateToken(token);
     }
+
+    @Post('refresh')
+    @ApiUnauthorizedResponse({ description: 'Token is not valid' })
+    @ApiOkResponse({ description: 'Token generated' })
+    @ApiBearerAuth()
+    public async refresh(@Req() request: Request): Promise<LoginResponseDto> {
+        const user = <User>request.user;
+        if (!user) {
+            return;
+        }
+
+        return await this.authService.refreshToken(user);
+    }
 }
