@@ -83,4 +83,7 @@ export class User {
     
   @OneToMany(() => LogEntry, logEntry => logEntry.authenticatedUser)
   public logEntries: LogEntry[];
+
+  @OneToMany(() => UserDevice, userDevice => userDevice.user)
+  public devices: UserDevice[];
 }

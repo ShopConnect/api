@@ -4,9 +4,12 @@ import { AuthService } from '../auth/auth.service';
 import { DatabaseService } from '../database/database.service';
 import { IdentificationCard } from '../database/entities/identification-card.entity';
 import { PatchUserRequestDto } from '../_dtos/patch-user-request.dto';
+import { RegisterDeviceRequestDto } from '../_dtos/register-device-request.dto';
+import { RegisterDeviceResponseDto } from '../_dtos/register-device-response.dto';
 import { Repository } from 'typeorm';
 import { UploadedFileModel } from '../_models/uploaded-file.model';
 import { User } from '../database/entities/user.entity';
+import { UserDevice } from 'src/database/entities/user-device.entity';
 import { UserRepository } from '../database/repositories/user.repository';
 import { UserToken } from '../database/entities/user-token.entity';
 
@@ -14,7 +17,7 @@ import { UserToken } from '../database/entities/user-token.entity';
 export class UserService {
   private readonly userRepository: UserRepository;
 
-  private readonly userTokenRepository: Repository<UserToken>;
+  private readonly userDeviceRepository: Repository<UserDevice>;
 
   private readonly identificationCardRepository: Repository<IdentificationCard>;
 
@@ -23,7 +26,7 @@ export class UserService {
     private readonly authService: AuthService,
   ) {
     this.userRepository = this.databaseService.userRepository;
-    this.userTokenRepository = this.databaseService.userTokenRepository;
+    this.userDeviceRepository = this.databaseService.userDeviceRepository;
     this.identificationCardRepository = this.databaseService.identificationCardRepository;
   }
 
@@ -117,6 +120,15 @@ export class UserService {
     return await this.identificationCardRepository.save(identificationCard) != null;
   }
 
+  public async registerDevice(requestUser: User, registerDeviceRequestDto: RegisterDeviceRequestDto): Promise<RegisterDeviceResponseDto> {
+    let userDevice = await this.userDeviceRepository.save(<UserDevice>{
+      user: requestUser,
+      token: registerDeviceRequestDto.token
+    });
+
+    return new RegisterDeviceResponseDto(userDevice != null);
+  }
+  
   public async deleteIdData(jwtUser: User): Promise<boolean> {
     let identificationCard = await this.identificationCardRepository.findOne({
       where: {

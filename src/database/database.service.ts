@@ -8,6 +8,7 @@ import { LogEntry } from './entities/log-entry.entity';
 import { Order } from './entities/order.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { Seed } from './entities/seed.entity';
+import { UserDevice } from './entities/user-device.entity';
 import { UserRepository } from './repositories/user.repository';
 import { UserToken } from './entities/user-token.entity';
 
@@ -29,6 +30,8 @@ export class DatabaseService {
 
     private readonly _userRepository: UserRepository;
 
+    private readonly _userDeviceRepository: Repository<UserDevice>;
+
     private readonly _userTokenRepository: Repository<UserToken>;
 
     constructor(
@@ -42,6 +45,7 @@ export class DatabaseService {
         this._orderItemRepository = this.connection.getRepository(OrderItem);
         this._seedRepository = this.connection.getRepository(Seed);
         this._userRepository = this.connection.getCustomRepository(UserRepository);
+        this._userDeviceRepository = this.connection.getRepository(UserDevice);
         this._userTokenRepository = this.connection.getRepository(UserToken);
     }
 
@@ -76,6 +80,10 @@ export class DatabaseService {
 
     public get userRepository(): UserRepository {
         return this._userRepository;
+    }
+
+    public get userDeviceRepository(): Repository<UserDevice> {
+        return this._userDeviceRepository;
     }
 
     public get userTokenRepository(): Repository<UserToken> {

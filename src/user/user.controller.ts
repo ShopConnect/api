@@ -9,7 +9,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '../database/entities/user.entity';
@@ -20,6 +20,8 @@ import { ApiImplicitFile } from '@nestjs/swagger/dist/decorators/api-implicit-fi
 import { UploadedFileModel } from '../_models/uploaded-file.model';
 import { PatchUserRequestDto } from '../_dtos/patch-user-request.dto';
 import { Order } from '../database/entities/order.entity';
+import { RegisterDeviceRequestDto } from '../_dtos/register-device-request.dto';
+import { RegisterDeviceResponseDto } from '../_dtos/register-device-response.dto';
 
 @Controller('user')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -66,6 +68,13 @@ export class UserController {
     }
 
     return this.userService.postIdFoto(requestUser, files);
+  }
+
+  @Post('@me/id/register-device')
+  @UseGuards(JwtAuthGuard)
+  public postRegisterDevice(@Req() req: Request, @Body() registerDeviceRequestDto: RegisterDeviceRequestDto): Promise<RegisterDeviceResponseDto> {
+    const requestUser = <User>req.user;
+    return this.userService.registerDevice(requestUser, registerDeviceRequestDto);
   }
 
   @Delete('@me/id')

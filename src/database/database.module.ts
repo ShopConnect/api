@@ -9,6 +9,7 @@ import { OrderItem } from './entities/order-item.entity';
 import { Seed } from './entities/seed.entity';
 import { SeedingService } from './seeding.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserDevice } from './entities/user-device.entity';
 import { UserRepository } from './repositories/user.repository';
 import { UserToken } from './entities/user-token.entity';
 
@@ -23,6 +24,7 @@ import { UserToken } from './entities/user-token.entity';
       OrderItem,
       Seed,
       UserRepository,
+      UserDevice,
       UserToken
     ])
   ],
