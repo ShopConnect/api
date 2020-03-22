@@ -175,7 +175,10 @@ export class UserService {
         owner: {
           id: owner.id
         }
-      }
+      },
+      relations: [
+        "items"
+      ]
     });
   }
 }
