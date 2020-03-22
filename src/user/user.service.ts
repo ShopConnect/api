@@ -11,7 +11,7 @@ import { UploadedFileModel } from '../_models/uploaded-file.model';
 import { User } from '../database/entities/user.entity';
 import { UserDevice } from '../database/entities/user-device.entity';
 import { UserRepository } from '../database/repositories/user.repository';
-import { Order } from 'src/database/entities/order.entity';
+import { Order } from '../database/entities/order.entity';
 
 @Injectable()
 export class UserService {
