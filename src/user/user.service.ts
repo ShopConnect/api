@@ -178,7 +178,8 @@ export class UserService {
       },
       relations: [
         "items",
-        "items.item"
+        "items.item",
+        "items.item.category"
       ]
     });
   }
