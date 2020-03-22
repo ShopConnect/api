@@ -21,6 +21,6 @@ export class Order {
   @Column("enum", { enum: OrderState })
   public orderState: OrderState;
 
-  @OneToMany(() => OrderItem, orderItem => orderItem.order)
+  @OneToMany(() => OrderItem, orderItem => orderItem.order, { eager: true })
   public items: OrderItem[];
 }
