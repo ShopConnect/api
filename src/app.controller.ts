@@ -38,10 +38,10 @@ export class AppController {
     return this.appService.getItemDetails(<Item>{ id: id });
   }
 
-  @Get('items')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
-  public getItems(): Promise<Item[]> {
-    return this.appService.getItems();
-  }
+  //@Get('items')
+  //@UseGuards(JwtAuthGuard)
+  //@ApiBearerAuth()
+  //public getItems(): Promise<Item[]> {
+  //  return this.appService.getItems();
+  //}
 }
