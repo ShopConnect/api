@@ -10,7 +10,7 @@ import { Item } from './database/entities/item.entity';
 @UseInterceptors(ClassSerializerInterceptor)
 @ApiTags("meta")
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
   @Get('health')
   public getHello(): object {
@@ -36,5 +36,12 @@ export class AppController {
   @ApiBearerAuth()
   public getItem(@Param('id') id: number): Promise<Item> {
     return this.appService.getItemDetails(<Item>{ id: id });
+  }
+
+  @Get('items')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
+  public getItems(): Promise<Item[]> {
+    return this.appService.getItems();
   }
 }

@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 export class AppService {
   private readonly itemCategoryRepository: Repository<ItemCategory>;
   private readonly itemRepository: Repository<Item>;
-  
+
   constructor(
     private readonly databaseService: DatabaseService,
   ) {
@@ -20,8 +20,8 @@ export class AppService {
 
   public getHello(): object {
     return {
-        message: 'It works!',
-        cat: cats()
+      message: 'It works!',
+      cat: cats()
     };
   }
 
@@ -46,5 +46,9 @@ export class AppService {
         id: item.id
       }
     });
+  }
+
+  public getItems(): Promise<Item[]> {
+    return this.itemRepository.find();
   }
 }
