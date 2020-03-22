@@ -44,7 +44,10 @@ export class AppService {
     return this.itemRepository.findOne({
       where: {
         id: item.id
-      }
+      },
+      relations: [
+        "category"
+      ]
     });
   }
 

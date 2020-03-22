@@ -177,7 +177,8 @@ export class UserService {
         }
       },
       relations: [
-        "items"
+        "items",
+        "items.item"
       ]
     });
   }

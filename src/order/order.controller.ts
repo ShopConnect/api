@@ -42,7 +42,7 @@ export class OrderController {
     @Get(':id')
     @UseGuards(JwtAuthGuard)
     public async getOrder(@Req() req: Request, @Param('id') id: number) {
-        const order = await this.orderService.getOrder(<Order>{ id: id }, ["items", "owner", "accepter"]);
+        const order = await this.orderService.getOrder(<Order>{ id: id }, ["items", "items.item", "owner", "accepter"]);
         const jwtUser = <User>req.user;
         let dbUser = await this.userService.getUser(jwtUser);
         if (order.owner.id != dbUser.id && !dbUser.isAdmin) {
