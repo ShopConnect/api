@@ -169,7 +169,7 @@ export class UserService {
     return (await this.identificationCardRepository.delete({ id: identificationCard.id })).affected > 0;
   }
 
-  public async getOrders(id: number) {
-    return this.orderRepository.find({ where: { id: id } });
+  public async getOrders(owner: User) {
+    return this.orderRepository.find({ where: { owner: owner } });
   }
 }
