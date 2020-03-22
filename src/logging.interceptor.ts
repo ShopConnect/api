@@ -23,12 +23,13 @@ export class LoggingInterceptor implements NestInterceptor {
   async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
     let request: Request = context.switchToHttp().getRequest();
     let token = "";
+    let ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
     if (request.headers.authorization) {
       token = request.headers.authorization.split(' ')[1];
     }
 
     let logEntry = await this.logEntryRepository.save(<LogEntry>{
-      ip: request.ip,
+      ip: ip,
       requestMethod: request.method,
       path: request.url,
       timestamp: new Date(),
