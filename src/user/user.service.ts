@@ -170,6 +170,12 @@ export class UserService {
   }
 
   public async getOrders(owner: User) {
-    return this.orderRepository.find({ where: { owner: owner } });
+    return this.orderRepository.find({
+      where: {
+        owner: {
+          id: owner.id
+        }
+      }
+    });
   }
 }

@@ -100,6 +100,6 @@ export class UserController {
   @Get(':id/orders')
   @UseGuards(JwtAuthGuard, AdminGuard)
   public async getForeignOrders(@Param('id') id: number): Promise<Order[]> {
-    return this.userService.getOrders(await this.getById(id));
+    return this.userService.getOrders(<User>{ id: id });
   }
 }

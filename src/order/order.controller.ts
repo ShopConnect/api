@@ -1,4 +1,4 @@
-import { Controller, Post, Req, Body, UseInterceptors, ClassSerializerInterceptor, UseGuards, Param, BadRequestException, Get, Delete, Patch, ServiceUnavailableException } from '@nestjs/common';
+import { Controller, Post, Req, Body, UseInterceptors, ClassSerializerInterceptor, UseGuards, Param, BadRequestException, Get, Delete, Patch } from '@nestjs/common';
 import { Request } from 'express';
 import { CreateOrderRequestDto, CreateOrderItemRequestDto } from '../_dtos/create-order-request.dto';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -7,6 +7,7 @@ import { OrderService } from './order.service';
 import { Order } from '../database/entities/order.entity';
 import { User } from '../database/entities/user.entity';
 import { OrderState } from '../_enums/order-state.enum';
+import { UserService } from '../user/user.service';
 
 @Controller('order')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -15,6 +16,7 @@ import { OrderState } from '../_enums/order-state.enum';
 export class OrderController {
     constructor(
         private readonly orderService: OrderService,
+        private readonly userService: UserService,
     ) { }
 
     @Post('')
@@ -39,9 +41,11 @@ export class OrderController {
 
     @Get(':id')
     @UseGuards(JwtAuthGuard)
-    public async getOrder(@Req() user: User, @Param('id') id: number) {
-        const order = await this.orderService.getOrder(<Order>{ id: id });
-        if (order.owner != user && !user.isAdmin) {
+    public async getOrder(@Req() req: Request, @Param('id') id: number) {
+        const order = await this.orderService.getOrder(<Order>{ id: id }, ["items", "owner", "accepter"]);
+        const jwtUser = <User>req.user;
+        let dbUser = await this.userService.getUser(jwtUser);
+        if (order.owner.id != dbUser.id && !dbUser.isAdmin) {
             throw new BadRequestException('You do not own this order!');
         }
         
